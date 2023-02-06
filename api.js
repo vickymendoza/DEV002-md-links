@@ -33,39 +33,6 @@ const regEx = /^(\/|[A-Za-z]:\\)/;
 function isAbsolute(path) {
   return regEx.test(path);
 }
-/*
-
-const absoOurRelative = (path) => {
-  return new Promise((resolve, reject) => {
-    if (isAbsolute(path)) {
-      resolve(path);
-    } else {
-      resolve(path.resolve(path));
-    }
-  });
-};
-
-
-const mdLinks = (path) => {
-
-  console.log("absoluta booleano", isAbsolute(path));
-  // path == relativa
-  return new Promise((resolve, reject) => {
-    // resolve =>  relativa al directorio desde donde se invoca node
-
-
-    // istat para saber si es una carpeta 
-    fs.lstat(path, (err, stats) => {
-      if (err) {
-        console.error(err);
-      } else if (stats.isDirectory()) {
-        console.log('Es una carpeta');
-      } else if (stats.isFile()) {
-        console.log('Es un archivo');
-      } else {
-        console.log('No es ni una carpeta ni un archivo');
-      }
-    });
 
 
     // funcion - chequear o convertir una ruta absoluta
@@ -74,8 +41,8 @@ const mdLinks = (path) => {
 
 
 
-  })
-} */
+  
+
 
 
 

@@ -7,10 +7,9 @@ const mdLinks = (path, options) => {
     
 
     if(fs.existsSync(path)){
-      console.log(" dino q es",changeToAbsolute(path))
-      console.log("si es directorio",idDirFil(path) )
-
-
+      console.log(" ruta absoluta",changeToAbsolute(path))
+      console.log("si es directorio",idDirFil(path))
+      
     } else {
       reject("la ruta no existe")
     }
