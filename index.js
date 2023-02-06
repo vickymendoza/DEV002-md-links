@@ -1,21 +1,21 @@
-const fs = require('fs');
+const { pathAbsolute, changeToAbsolute, idDirFil } = require('./api.js')
+const fs = require("fs");
+const path = require("path");
 
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => {
+    
+
     if(fs.existsSync(path)){
-      //Crear una función paraChequear o convertir a una ruta absoluta
-      //Probar si esa ruta absoluta es un archivo o directorio
-      //Si es un directorio filtrar los archivos que devuelva un Array filtrado
+      console.log(" dino q es",changeToAbsolute(path))
+      console.log("si es directorio",idDirFil(path) )
+
+
     } else {
-
-      reject('la ruta no existe')
-
+      reject("la ruta no existe")
     }
-
   })
 }
-
-module.exports =  {
+module.exports = {
   mdLinks
-  // ...
-};
+}
