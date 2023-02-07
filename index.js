@@ -1,4 +1,4 @@
-const { pathAbsolute, changeToAbsolute,  checkPath, readFiles } = require('./api.js')
+const { pathAbsolute, changeToAbsolute,  checkPath } = require('./api.js')
 const fs = require("fs");
 const path = require("path");
 
@@ -9,7 +9,7 @@ const mdLinks = (path, options) => {
     if(fs.existsSync(path)){
       console.log(" ruta absoluta",changeToAbsolute(path))
       console.log ("recursividad de carpetas y por ahora sale lista de los files que terminan .md dice ",checkPath(path))
-      readFiles(path)
+     // readFiles(path)
     } else {
       reject("la ruta no existe")
     }
