@@ -31,22 +31,27 @@ const filePath = path.join(dir, file);
           checkPath(filePath);
     });
   }
-  return mdFiles;
+    return mdFiles;
 }
-      // Función para leer los archivos
-const readFiles = (mdFiles)=>{
+  // función para obtener los links en un array
+    const readFiles = (route) => {
     return new Promise((resolve, reject) => {
-        fs.readFile(mdFiles, 'utf8', (err, mdFiles) => {
-    if (err) {
-      reject(err)      
-    }else {
-        resolve (mdFiles)
-      }
-        })
-  });
-  }
-console.log ("acá con este console", mdFiles)
+        fs.readFile(route, 'utf-8', (error, contentlink) => {
+            if (error) {
+                return reject(error);
+            }
+            const regex = /\[.*\]\((https?:\/\/\S+)\)/g;
+            const Arraylinks = [];
+            let savelink;
+            while ((savelink = regex.exec(contentlink))) {
+              Arraylinks.push(savelink[1]);
+            }
 
+            resolve(Arraylinks);
+        });
+    });
+};
+    
 
 module.exports = {
   changeToAbsolute, checkPath, readFiles

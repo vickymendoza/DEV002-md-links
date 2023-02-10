@@ -8,13 +8,17 @@ const mdLinks = (path, options) => {
 
     if(fs.existsSync(path)){
       console.log(" ruta absoluta",changeToAbsolute(path))
-      console.log ("recursividad de carpetas leyendo .md ",checkPath(path))
-      console.log (" leyendo archivos .md", readFiles())
+      console.log ("recursividad de carpetas leyendo .md ",checkPath(path)) 
+      readFiles(path)
+    .then((contentlink) => console.log(" ojalá funcione", contentlink)) 
+    .catch((error) => console.log(" ojalá funcione", error))
     } else {
       reject("la ruta no existe")
     }
   })
 }
+
+
 module.exports = {
   mdLinks
 }
