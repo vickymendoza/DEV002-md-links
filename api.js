@@ -44,7 +44,14 @@ const filePath = path.join(dir, file);
             const Arraylinks = [];
             let savelink;
             while ((savelink = regex.exec(contentlink))) {
-              Arraylinks.push(savelink[1]);
+              Arraylinks.push({
+                //texto que aparece dentro del link
+                text: savelink[0],
+                //url encontrado =
+                href: savelink[1],
+                // Es el archivo en el que se encontró
+                file: route,
+              });
             }
 
             resolve(Arraylinks);

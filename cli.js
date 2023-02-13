@@ -1,6 +1,6 @@
 const { mdLinks } = require ('./index.js');
 
-mdLinks ('./newReadme.md')
+mdLinks ('./README.md')
 .then(()=>{
 
 })
