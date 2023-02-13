@@ -15,7 +15,7 @@ const validatelinks = (path) => {
     })
     .catch(e => {
         // Podemos mostrar los errores en la consola
-        console.log('error 400');
+        console.log(e);
     })    
   })
 } 
