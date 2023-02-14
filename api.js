@@ -40,11 +40,11 @@ const filePath = path.join(dir, file);
             if (error) {
                 return reject(error);
             }
-            const regex = /\[(.*)\]\((https?:\/\/\S+)\)/g;;
+            const regex = /\[(.*)\]\((https?:\/\/\S+)\)/g;
             const Arraylinks = [];
             let savelink;
             while ((savelink = regex.exec(contentlink))) {
-              console.log (" vamos a descubri la ubicación", savelink)
+             // console.log (" vamos a descubri la ubicación", savelink)
               Arraylinks.push({
 
                 //texto que aparece dentro del link
