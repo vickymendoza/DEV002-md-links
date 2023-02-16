@@ -19,21 +19,27 @@ const validatelinks = (path) => {
     })
     .catch(e => {
         // Podemos mostrar los errores en la consola
-        reject("Link que no sirve")
+        reject("Link que no sirve", e)
     })    
   });
 }
 //Función para iniciar a crear las flags -- validate
   const flagsValidate = (Arraylinks) => {
     Arraylinks.then((links=>{
-      console.log("Buscando el objeto",links)
-    links.forEach(linkhttp => {
-      console.log("recorriendo uno por uno los links", linkhttp);
+        
+      links.forEach(linkhttp => {
+        console.log("Con  David",linkhttp.href)
       validatelinks(linkhttp.href)
-      .then(({validateStatus,ValidateMessage}) => console.log({validateStatus,ValidateMessage}))
+      .then(({validateStatus,ValidateMessage}) => {
+         linkhttp.validateStatus = validateStatus;
+         linkhttp.ValidateMessage = ValidateMessage;
+         linkhttp.nombre ="David"
+         console.log ("imprima algo pues", linkhttp)
+        })
       .catch((error) => console.log ("por si te rompes", error))
       
-    });
+     });
+     console.log("Buscando el objeto",links)
 
     
   }))

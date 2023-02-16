@@ -8,11 +8,11 @@ const mdLinks = (path, options) => {
     
 
     if(fs.existsSync(path)){
-      // console.log(" ruta absoluta",changeToAbsolute(path))
-      // console.log ("recursividad de carpetas leyendo .md ",checkPath(path)) 
-      // readFiles(path)
-      // .then((contentlink) => console.log(" ojalá funcione", contentlink)) 
-      // .catch((error) => console.log(" ojalá funcione", error))
+      console.log(" ruta absoluta",changeToAbsolute(path))
+      console.log ("recursividad de carpetas leyendo .md ",checkPath(path)) 
+      readFiles(path)
+      .then((contentlink) => console.log(" ojalá funcione", contentlink)) 
+      .catch((error) => console.log(" ojalá funcione", error))
       // validatelinks(['https://styde.net/solicitudes-http-con-axios/'])
       // .then((validateStatus) => console.log("lee por favor la vadilación", validateStatus))
       // .catch((error) => console.log ("por si te rompes", error))
