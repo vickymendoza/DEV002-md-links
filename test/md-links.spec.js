@@ -11,8 +11,8 @@ describe('mdLinks', () => {
   //   expect(mdLinks()).toBe(typeof Promise);
   // });
 
-  it('Debe rechazar cuando el path no existe ', () => {
-    return mdLinks('/erika/cursos/noexiste.md').catch((error) => {
+  it('should don´t exist the path ', () => {
+    return mdLinks('/Sarayueimy/cursos/noexiste.md').catch((error) => {
        expect(error).toBe('la ruta no existe')
     })
 
