@@ -1,6 +1,46 @@
 const fs = require('fs');
+const path = require('path');
 
-// función para obtener los links en un archivo especifico y los rrtorna en un array
+/**
+ * Transforma una ruta relativa a absoluta
+ * @param ruta Ruta a transformar
+ * @returns Retorna la ruta transformada a absoluta.
+ */
+const changeToAbsolute = (ruta) => {
+  return path.resolve(ruta);
+}
+
+/**
+ * @param ruta Ruta a validar
+ * @returns Returns true if the path is relative, false otherwise.
+ */
+function isRelative(userPath) {
+  return !/^([a-z]+:)?[\\/]/i.test(userPath);
+}
+
+const foundFiles = [];
+/**
+ * 
+ * @param  directory Directorio sobre el que se realizara la busqueda
+ * @param  extension Extension de los archivos a buscar 
+ * @returns Lista de archivos encontrados que corresponden a la extension recibida
+ */
+const getFileByExtension = (directory, extension) => {
+  if(fs.lstatSync(directory).isDirectory()){
+    const files = fs.readdirSync(directory);
+    files.forEach(file => {
+      const fileWithPath = path.join(directory, file);
+      if(fs.lstatSync(fileWithPath).isDirectory()){
+        getFileByExtension(fileWithPath, extension)
+      } else if (fs.lstatSync(fileWithPath).isFile() && path.extname(fileWithPath) ===  ".".concat(extension)) {
+        foundFiles.push(fileWithPath);
+      }
+    });
+  }
+  return foundFiles;
+}
+
+// función para obtener los links en un archivo especifico y los retorna en un array
 const readFiles = (route) => {
   return new Promise((resolve, reject) => {
     fs.readFile(route, 'utf-8', (error, contentlink) => {
@@ -26,7 +66,6 @@ const readFiles = (route) => {
   });
 };
 
-
 module.exports = {
-  readFiles
+  changeToAbsolute, isRelative, getFileByExtension, readFiles
 };

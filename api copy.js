@@ -18,6 +18,7 @@
         return regEx.test(path);
     }
 
+    
 //Función para recorrer las carpetas, sacar la ruta y hacer recursividad ingresando a todas las carpetas
 //para traer los archivos .md
     const checkPath = (dir) => {
@@ -33,6 +34,10 @@
   }
       return mdFiles;
 }
+
+
+
+
   // función para obtener los links en un array
     const readFiles = (route) => {
         return new Promise((resolve, reject) => {
