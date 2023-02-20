@@ -60,18 +60,10 @@ const validatelinks = (objetoInicial) => {
     })  
     
 
-
     
 
   });
 }
-
-
-
-
-
-
-
 
 const getEstadisticas = (arrayObjetos) => {
   let unique = 0;
@@ -87,7 +79,23 @@ const getEstadisticas = (arrayObjetos) => {
   });
   estadisticas.Broken = broken;
 
+  estadisticas.unique = llamarProductores(arrayObjetos);
+
   return estadisticas;
+}
+
+
+function llamarProductores(arrayObjetos) {
+  let objeto;
+  let todosLosObjetos = [];
+  
+  arrayObjetos.forEach(objeto => {
+    if (!todosLosObjetos.includes(objeto.href)) {
+      todosLosObjetos.push(objeto.href);
+    }
+  });
+
+  return todosLosObjetos.length;
 }
 
 

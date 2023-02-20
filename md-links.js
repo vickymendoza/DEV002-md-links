@@ -60,14 +60,14 @@ const mdLinks = (userPath, options) => {
           Arraylinks.forEach(objetoInicial => {
             listaPromesas.push(validatelinks(objetoInicial));
           });
-        
+
           Arraylinks = [];
           Promise.all(listaPromesas)
           .then(responses => {
             responses.forEach(response => {
               Arraylinks.push(response);
             })
-          
+
             if(estadísticas){
               resolve(getEstadisticas(Arraylinks));
             }else{

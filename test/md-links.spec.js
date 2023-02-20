@@ -16,8 +16,6 @@ describe('mdLinks', () => {
        expect(error).toBe('la ruta no existe')
     })
 
-    
-
   });
 
 });
