@@ -79,13 +79,13 @@ const getEstadisticas = (arrayObjetos) => {
   });
   estadisticas.Broken = broken;
 
-  estadisticas.unique = llamarProductores(arrayObjetos);
+  estadisticas.unique = uniqueObject(arrayObjetos);
 
   return estadisticas;
 }
 
 
-function llamarProductores(arrayObjetos) {
+function uniqueObject(arrayObjetos) {
   let objeto;
   let todosLosObjetos = [];
   
