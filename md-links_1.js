@@ -41,38 +41,31 @@ const mdLinks = (userPath, options) => {
         reject("la ruta no es un directorio o no tiene la extension valida")
       }
 
-
-      let listaPromesas_readFiles = [];
-      let Arraylinks = [];
-      foundFiles.forEach(objetoInicial => {
-        listaPromesas_readFiles.push(readFiles(objetoInicial));
-      });
-      Promise.all(listaPromesas_readFiles)
-      .then(responses => {
-        responses.forEach(response => {
-          response.forEach(element => {
-            Arraylinks.push(element);
-          });
-        })
+      const linksEncontrados = readFiles(userPath);
+      linksEncontrados
+      .then((Arraylinks) =>{
 
         if(validate){
+        // if(validate.validate){
+
           let listaPromesas = [];
           Arraylinks.forEach(objetoInicial => {
             listaPromesas.push(validatelinks(objetoInicial));
           });
-        
+
           Arraylinks = [];
           Promise.all(listaPromesas)
           .then(responses => {
             responses.forEach(response => {
               Arraylinks.push(response);
             })
-          
+
             if(estadísticas){
               resolve(getEstadisticas(Arraylinks));
             }else{
               resolve(Arraylinks)
             }
+            
           })
           .catch(err =>
             reject(err)        
@@ -80,14 +73,14 @@ const mdLinks = (userPath, options) => {
         }else{
           if(estadísticas){
             resolve(getEstadisticas(Arraylinks));
-          }else{
-            resolve(Arraylinks)
-          }
+        }else{
+          resolve(Arraylinks)
+        }
         }
       })
       .catch(err =>
         reject(err)        
-      )     
+      )
 
     } else {
       reject("la ruta no existe")

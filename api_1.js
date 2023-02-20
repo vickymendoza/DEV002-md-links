@@ -21,11 +21,13 @@ const readFiles = (userPath) => {
       let savelink;
 
       while ((savelink = regex.exec(contentlink))) {
+        const url = savelink[2];
+
         let detailLink = new Object();
         //texto que aparece dentro del link
         detailLink.text = savelink[1];
         //url
-        detailLink.href = savelink[2];
+        detailLink.href = url;
         // Es el archivo en el que se encontró
         detailLink.path = userPath;
 
