@@ -59,10 +59,41 @@ const validatelinks = (objetoInicial) => {
       objetoInicial.status = e.response.status;
       objetoInicial.ok = e.response.statusText;
       resolve(objetoInicial)
-    })    
+    })  
+    
+
+
+    
+
   });
 }
 
+
+
+
+
+
+
+
+const getEstadisticas = (arrayObjetos) => {
+  let unique = 0;
+  let broken = 0;
+  let estadisticas = new Object();
+
+  estadisticas.Total = arrayObjetos.length;
+
+  arrayObjetos.forEach(objeto => {
+    if(objeto.status != 200){
+      broken++;
+    }
+  });
+  estadisticas.Broken = broken;
+
+  return estadisticas;
+}
+
+
+
 module.exports = {
-  readFiles, validatelinks
+  readFiles, validatelinks, getEstadisticas
 };
