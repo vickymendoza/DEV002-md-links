@@ -7,18 +7,19 @@ let path;
 //         imprimir = true;
 //     }
 // });
-
 // console.log(process.argv[2]);
 path = process.argv[2]
 
+// node cli.js ./newReadme.md  '{"""validate""":false}'
+// node cli.js ./newReadme.md  '{"""validate""":true}'
 
 mdLinks (path, process.argv)
-.then(links => {
-    console.log("Aqui imprime la ruta enviada y que se metio en el resolve", links)
-})
-.catch((error)=>{
+.then(links => 
+    console.log(links)
+)
+.catch((error)=>
     console.log(error)
-})
+)
 
 
 

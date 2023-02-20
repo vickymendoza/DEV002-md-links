@@ -1,71 +1,68 @@
 const fs = require('fs');
-const path = require('path');
+const axios = require ('axios');
 
 /**
- * Transforma una ruta relativa a absoluta
- * @param ruta Ruta a transformar
- * @returns Retorna la ruta transformada a absoluta.
+ * función para obtener los links en un archivo especifico y los retorna en un array
+ * @param userPath asasasas
+ * @returns [{text, href, path}, ...] if validate is false or [{text, href, path, status, ok}, ...] if validate is true
  */
-const changeToAbsolute = (ruta) => {
-  return path.resolve(ruta);
-}
+const readFiles = (userPath) => {
 
-/**
- * @param ruta Ruta a validar
- * @returns Returns true if the path is relative, false otherwise.
- */
-function isRelative(userPath) {
-  return !/^([a-z]+:)?[\\/]/i.test(userPath);
-}
-
-const foundFiles = [];
-/**
- * 
- * @param  directory Directorio sobre el que se realizara la busqueda
- * @param  extension Extension de los archivos a buscar 
- * @returns Lista de archivos encontrados que corresponden a la extension recibida
- */
-const getFileByExtension = (directory, extension) => {
-  if(fs.lstatSync(directory).isDirectory()){
-    const files = fs.readdirSync(directory);
-    files.forEach(file => {
-      const fileWithPath = path.join(directory, file);
-      if(fs.lstatSync(fileWithPath).isDirectory()){
-        getFileByExtension(fileWithPath, extension)
-      } else if (fs.lstatSync(fileWithPath).isFile() && path.extname(fileWithPath) ===  ".".concat(extension)) {
-        foundFiles.push(fileWithPath);
-      }
-    });
-  }
-  return foundFiles;
-}
-
-// función para obtener los links en un archivo especifico y los retorna en un array
-const readFiles = (route) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(route, 'utf-8', (error, contentlink) => {
+
+    fs.readFile(userPath, 'utf-8', (error, contentlink) => {
+
       if (error) {
         return reject(error);
       }
+
       const regex = /\[(.*)\]\((https?:\/\/\S+)\)/g;
       const Arraylinks = [];
       let savelink;
+
       while ((savelink = regex.exec(contentlink))) {
-          // console.log (" vamos a descubri la ubicación", savelink)
-          Arraylinks.push({
-          //texto que aparece dentro del link
-          text: savelink[1],
-          //url encontrado =
-          href: savelink[2],
-          // Es el archivo en el que se encontró
-          path: route,
-        });
+        const url = savelink[2];
+
+        let detailLink = new Object();
+        //texto que aparece dentro del link
+        detailLink.text = savelink[1];
+        //url
+        detailLink.href = url;
+        // Es el archivo en el que se encontró
+        detailLink.path = userPath;
+
+        Arraylinks.push(detailLink);
       }
       resolve(Arraylinks);
     });
   });
 };
 
+/**
+ * ¿?
+ * @param  url ¿?
+ * @returns ¿?
+ */
+const validatelinks = (objetoInicial) => {
+  return new Promise((resolve, reject) => {
+    axios.get(objetoInicial.href)
+    .then(response => {
+      const validateStatus = response.status
+      const ValidateMessage= response.statusText
+
+      objetoInicial.status = validateStatus;
+      objetoInicial.ok = ValidateMessage;
+
+      resolve(objetoInicial)
+    })
+    .catch(e => {
+      objetoInicial.status = e.response.status;
+      objetoInicial.ok = e.response.statusText;
+      resolve(objetoInicial)
+    })    
+  });
+}
+
 module.exports = {
-  changeToAbsolute, isRelative, getFileByExtension, readFiles
+  readFiles, validatelinks
 };

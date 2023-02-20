@@ -1,14 +1,17 @@
-const { changeToAbsolute, isRelative, readFiles, getFileByExtension } = require('./api.js')
+const { readFiles, validatelinks } = require('./api.js')
+const { changeToAbsolute, isRelative, getFileByExtension } = require('./otherfuncions.js')
 const fs = require("fs");
-let extension = "md";
 const path = require('path');
 
+let extension = "md";
 
 const mdLinks = (userPath, options) => {
   return new Promise((resolve, reject) => {
 
     console.log(userPath, options);
 
+    const validate = JSON.parse(options[3]);
+    const primervalidate = JSON.parse(options[4]);
     if(fs.existsSync(userPath)){
       
       if(isRelative(userPath)){
@@ -24,12 +27,39 @@ const mdLinks = (userPath, options) => {
         reject("la ruta no es un directorio o no tiene la extension valida")
       }
 
+      const linksEncontrados = readFiles(userPath);
+      linksEncontrados
+      .then((Arraylinks) =>{
 
-        // const linksEncontrados = readFiles(rutaNueva);
+        if(validate.validate){
 
-        // linksEncontrados.then(links => {
-        //   resolve(links)        
-        // })
+          let listaPromesas = [];
+          Arraylinks.forEach(objetoInicial => {
+            listaPromesas.push(validatelinks(objetoInicial));
+          });
+
+          Arraylinks = [];
+          Promise.all(listaPromesas)
+          .then(responses => {
+            responses.forEach(response => {
+              Arraylinks.push(response);
+            })
+            resolve(Arraylinks)
+          })
+          .catch(err =>
+            reject(err)        
+          )
+        }else{
+          resolve(Arraylinks)
+        }
+
+        
+
+      })
+      .catch(err =>
+        reject(err)        
+      )
+
     } else {
       reject("la ruta no existe")
     }

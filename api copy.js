@@ -18,7 +18,7 @@
         return regEx.test(path);
     }
 
-    
+
 //Función para recorrer las carpetas, sacar la ruta y hacer recursividad ingresando a todas las carpetas
 //para traer los archivos .md
     const checkPath = (dir) => {
@@ -51,14 +51,12 @@
             while ((savelink = regex.exec(contentlink))) {
              // console.log (" vamos a descubri la ubicación", savelink)
               Arraylinks.push({
-
                 //texto que aparece dentro del link
                 text: savelink[1],
                 //url encontrado =
                 href: savelink[2],
                 // Es el archivo en el que se encontró
                 path: route,
-                
               });
             }
 

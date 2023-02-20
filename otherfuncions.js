@@ -1,44 +1,45 @@
-    const fs = require('fs');
-    const path = require('path');
-    const axios = require ('axios');
-    const { readFiles } = require('./API.js')
+const fs = require('fs');
+const path = require('path');
 
-
-    //FUNCIÓN PARA VALIDAR LINKS
-    const validatelinks = (path) => {
-      return new Promise((resolve, reject) => {
-      axios.get(path)
-      .then(response => {
-       const validateStatus = response.status
-       const ValidateMessage= response.statusText
-      //  console.log (" validando el status",validateStatus)
-      resolve({validateStatus,ValidateMessage})
-    })
-      .catch(e => {
-        // Podemos mostrar los errores en la consola
-      reject("Link que no sirve", e)
-    })    
-  });
+/**
+ * Transforma una ruta relativa a absoluta
+ * @param userPath Ruta a transformar
+ * @returns Retorna la ruta transformada a absoluta.
+ */
+const changeToAbsolute = (userPath) => {
+  return path.resolve(userPath);
 }
-//Función para iniciar a crear las flags -- validate
-  const flagsValidate = (Arraylinks) => {
-    Arraylinks.then((links=>{        
-      links.forEach(linkhttp => {
-        console.log("Con  David",linkhttp.href)
-      validatelinks(linkhttp.href)
-      .then(({validateStatus,ValidateMessage}) => {
-         linkhttp.validateStatus = validateStatus;
-         linkhttp.ValidateMessage = ValidateMessage;
-         console.log ("imprima algo pues", linkhttp)
-        })
-      .catch((error) => console.log ("por si te rompes", error))
-      
-     });
-     
-     
-  }))
+
+/**
+ * @param userPath Ruta a validar
+ * @returns Returns true if the path is relative, false otherwise.
+ */
+function isRelative(userPath) {
+  return !/^([a-z]+:)?[\\/]/i.test(userPath);
+}
+
+const foundFiles = [];
+/**
+ * 
+ * @param  directory Directorio sobre el que se realizara la busqueda
+ * @param  extension Extension de los archivos a buscar 
+ * @returns Lista de archivos encontrados que corresponden a la extension recibida
+ */
+const getFileByExtension = (directory, extension) => {
+  if(fs.lstatSync(directory).isDirectory()){
+    const files = fs.readdirSync(directory);
+    files.forEach(file => {
+      const fileWithPath = path.join(directory, file);
+      if(fs.lstatSync(fileWithPath).isDirectory()){
+        getFileByExtension(fileWithPath, extension)
+      } else if (fs.lstatSync(fileWithPath).isFile() && path.extname(fileWithPath) ===  ".".concat(extension)) {
+        foundFiles.push(fileWithPath);
+      }
+    });
+  }
+  return foundFiles;
 }
 
 module.exports = {
-  validatelinks, flagsValidate
+  changeToAbsolute, isRelative, getFileByExtension
 }
