@@ -3,9 +3,9 @@ const { changeToAbsolute, isRelative, getFileByExtension } = require('./otherfun
 const fs = require("fs");
 const path = require('path');
 
-let extension = "md";
+const extension = "md";
 
-const mdLinks = (userPath, options) => {
+const mdLinks = (userPath, options = []) => {
   return new Promise((resolve, reject) => {
 
     let validate = false
@@ -40,7 +40,6 @@ const mdLinks = (userPath, options) => {
       }else{
         reject("la ruta no es un directorio o no tiene la extension valida")
       }
-
 
       let listaPromesas_readFiles = [];
       let Arraylinks = [];

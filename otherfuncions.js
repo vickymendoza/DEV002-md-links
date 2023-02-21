@@ -37,6 +37,7 @@ const getFileByExtension = (directory, extension) => {
       }
     });
   }
+
   return foundFiles;
 }
 
