@@ -5,19 +5,15 @@ describe('test for isRelative', () => {
   const relativa = './newReadme.md';
   const absolute = 'C:\\Users\\Victoria\\Desktop\\mdLinksDos\\DEV002-md-links\\newReadme.md';
 
-  it('should by a true', () => {
-    expect(isRelative(relativa)).toBe(true);
-    expect(isRelative(absolute)).toBe(false);
-  });
+  expect(isRelative(relativa)).toBe(true);
+  expect(isRelative(absolute)).toBe(false);
 });
 
 describe('test for changeToAbsolute', () => {
 
   const relativa = './newReadme.md';
 
-  it('should by a new path', () => {
-    expect(changeToAbsolute(relativa)).toBe('C:\\Users\\Victoria\\Desktop\\mdLinksDos\\DEV002-md-links\\newReadme.md');
-  });
+  expect(changeToAbsolute(relativa)).toBe('C:\\Users\\Victoria\\Desktop\\mdLinksDos\\DEV002-md-links\\newReadme.md');
 });
 
 describe('test for getFileByExtension', () => {

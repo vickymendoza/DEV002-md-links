@@ -71,7 +71,6 @@ const getEstadisticas = (arrayObjetos) => {
   return estadisticas;
 }
 
-
 function quantityUniqueObject(arrayObjetos) {
   let todosLosObjetos = [];
   arrayObjetos.forEach(objeto => {
